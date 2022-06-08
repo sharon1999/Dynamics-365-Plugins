@@ -9,3 +9,4 @@ development. There is only so much you can configure there, and you certainly ca
 * Workflows can be configured and customized (using custom workflow activities).
 
 ### Plugins are still somewhat more flexible when it comes to configuring the trigger conditions, pre-images, post-images, messages.
+***

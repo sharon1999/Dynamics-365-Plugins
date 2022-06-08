@@ -11,6 +11,4 @@ development. There is only so much you can configure there, and you certainly ca
 ### Plugins are still somewhat more flexible when it comes to configuring the trigger conditions, pre-images, post-images, messages.
 ***
 #### Still, when developing a plugin you need to know the exectuion context – what was happening on the client, what is the record being processed, what are the fields being updated, what is the action being taken.
-***
-# Every plugin is expected to implement “Execute” method of the IPlugin interface, and there is a single parameter passed to that call: 
-***
+

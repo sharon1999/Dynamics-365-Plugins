@@ -148,14 +148,14 @@ https://msdn.microsoft.com/en-us/library/microsoft.xrm.sdk.iorganizationservice.
 
 | Name        | Description     | 
 | ------------- |:-------------:| 
-| Associate(String, Guid, Relationship, EntityReferenceCollection)	      | Creates a link between records. | 
-| 	Create(Entity)  | Creates a record.     |   
-| Delete(String, Guid) | Deletes a record.     |    
-|Disassociate(String, Guid, Relationship, EntityReferenceCollection) |Deletes a link between records.     |  
-| Execute(OrganizationRequest) | Executes a message in the form of a request, and returns a response.     |  
-| Retrieve(String, Guid, ColumnSet) | Retrieves a record.     |  
-| RetrieveMultiple(QueryBase) | Retrieves a collection of records.    |  
-| Update(Entity) | Updates an existing record.   |  
+| [Associate(String, Guid, Relationship, EntityReferenceCollection)](https://docs.microsoft.com/en-us/previous-versions/dynamicscrm-2016/developers-guide/gg326161(v=crm.8))	      | Creates a link between records. | 
+|[Create(Entity)](https://docs.microsoft.com/en-us/previous-versions/dynamicscrm-2016/developers-guide/gg326155(v=crm.8))  | Creates a record.     |   
+| [Delete(String, Guid)](https://docs.microsoft.com/en-us/previous-versions/dynamicscrm-2016/developers-guide/gg326162(v=crm.8)) | Deletes a record.     |    
+|[Disassociate(String, Guid, Relationship, EntityReferenceCollection)](https://docs.microsoft.com/en-us/previous-versions/dynamicscrm-2016/developers-guide/gg326163(v=crm.8)) |Deletes a link between records.     |  
+|[ Execute(OrganizationRequest)](https://docs.microsoft.com/en-us/previous-versions/dynamicscrm-2016/developers-guide/gg326156(v=crm.8)) | Executes a message in the form of a request, and returns a response.     |  
+| [Retrieve(String, Guid, ColumnSet)](https://docs.microsoft.com/en-us/previous-versions/dynamicscrm-2016/developers-guide/gg326164(v=crm.8)) | Retrieves a record.     |  
+|[ RetrieveMultiple(QueryBase)](https://docs.microsoft.com/en-us/previous-versions/dynamicscrm-2016/developers-guide/gg326157(v=crm.8)) | Retrieves a collection of records.    |  
+|[ Update(Entity) ](https://docs.microsoft.com/en-us/previous-versions/dynamicscrm-2016/developers-guide/gg326166(v=crm.8))| Updates an existing record.   |  
 
 
 

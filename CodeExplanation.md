@@ -1,57 +1,64 @@
-## Sample Code 
- * Code to check if name is Test then throw an exception
- ```cs
- using System;
+## Code Template
+```cs
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using Microsoft.Xrm.Sdk;
-using Microsoft.Xrm.Sdk.Query;
-namespace Training.Plugins
+using System.ServiceModel;
+
+namespace MyPlugins
 {
-    public class ValidationPlugin : IPlugin
+    public class PluginTemplate : IPlugin
     {
         public void Execute(IServiceProvider serviceProvider)
         {
-            IPluginExecutionContext context = (IPluginExecutionContext)serviceProvider.GetService(typeof(IPluginExecutionContext));
-            Entity entity = (Entity)context.InputParameters["Target"];
-            string name = (string)entity["ita_name"];
-            if ("Test".Equals(name))
+            // Extract the tracing service for use in debugging sandboxed plug-ins.  
+            // If you are not registering the plug-in in the sandbox, then you do  
+            // not have to add any tracing service related code.  
+            ITracingService tracingService =
+                (ITracingService)serviceProvider.GetService(typeof(ITracingService));
+
+            // Obtain the execution context from the service provider.  
+            IPluginExecutionContext context = (IPluginExecutionContext)
+                serviceProvider.GetService(typeof(IPluginExecutionContext));
+
+            // Obtain the organization service reference which you will need for  
+            // web service calls.  
+            IOrganizationServiceFactory serviceFactory =
+                (IOrganizationServiceFactory)serviceProvider.GetService(typeof(IOrganizationServiceFactory));
+            IOrganizationService service = serviceFactory.CreateOrganizationService(context.UserId);
+
+
+
+            // The InputParameters collection contains all the data passed in the message request.  
+            if (context.InputParameters.Contains("Target") &&
+                context.InputParameters["Target"] is Entity)
             {
-                throw new InvalidPluginExecutionException("Cannot use this name");
+                // Obtain the target entity from the input parameters.  
+                Entity entity = (Entity)context.InputParameters["Target"];
+
+
+                try
+                {
+                    // Plug-in business logic goes here.  
+
+           
+                }
+
+                catch (FaultException<OrganizationServiceFault> ex)
+                {
+                    throw new InvalidPluginExecutionException("An error occurred in MyPlug-in.", ex);
+                }
+
+                catch (Exception ex)
+                {
+                    tracingService.Trace("MyPlugin: {0}", ex.ToString());
+                    throw;
+                }
             }
         }
     }
 }
 ```
-
-### Every plugin is expected to implement “Execute” method of the IPlugin interface, and there is a single parameter passed to that call: 
-```cs
-  public void Execute(IServiceProvider serviceProvider)
-  {
-  }
-```        
-* ### IServiceProvide is a common interface not specific to Dynamics that defined just one method
-
-* ### Using the serviceProvide, you can get access to the contextual information specific to that plugin execution:
-```cs
-  IPluginExecutionContext context = (IPluginExecutionContext) serviceProvider.GetService(typeof(IPluginExecutionContext));
-  Entity entity = (Entity)context.InputParameters["Target"];
-```
-* First, we are getting the context in exactly the way we just discussed. And, then, we are getting the “Target” from the context.InputParameters
-* “Target” is, really, the in-memory representation of the data that’s being updated/created/deleted/etc. 
-* In other words, if, in the user interface, you are updating the account record, then, in the plugin, “Target” will represent exactly that account. 
-### IPluginExecutionContext gives you access to pretty much all the contextual details you may get access to in the plugin:
-- context.InputParameters[“Target”]
-- context.PreEntityImages
-- context.PostEntityImages
-- context.MessageName
-- context.Stage
- 
->Take a look at the MSDN page describing IPluginExecutionContext in more details  
-https://msdn.microsoft.com/en-us/library/microsoft.xrm.sdk.ipluginexecutioncontext.aspx
- ***
-> ### Q1: Will the context be there for every plugin execution?
-* Yes, it will.
-> ### Q2: Will the Target be there for every plugin execution?
-* No, not necessarily. It depends on the plugin step configuration. Remember we can register a plugin for different messages? Not all of them will have a target. Although, messages like “Create”/”Update”/”Delete” will have a Target. 
-> ### Q2.1: How do you know what you will find in the “Target”? 
-* You just learn those things as you keep developing plugins. For example, for the “Create” and “Update” plugins, you will always have a “Target”, and it will be of “Entity” type. For the “Delete” plugins, you will also have a “Target”, but it will be of “EntityReference” type.
- 
